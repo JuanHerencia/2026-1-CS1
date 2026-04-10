@@ -1,0 +1,28 @@
+                   Ejercicios
+                   ----------
+
+1. Situación real: 
+Un equipo hereda un módulo de cálculo de nómina con una función de 800 líneas que mezcla lógica de negocio, acceso a base de datos y generación de reportes en PDF. Cualquier cambio en una tasa impositiva requiere modificar cinco secciones distintas de la misma función.
+
+¿Como se puede minimizar la complejidad?
+
+2. Situación real: 
+Un sistema de envíos usa una tarifa fija por peso. La empresa planea cambiar a un modelo dinámico (zona, temporada, tipo de cliente). El código original tenía la tarifa incrustada como constante. 
+
+Ejemplo de código (sin anticipación – difícil de cambiar): 
+
+// Mala práctica: constante fija 
+public class CalculadorEnvio { 
+    public double calcular(double peso) { 
+        return peso * 5.0; // tarifa fija por kg 
+    } 
+} 
+
+3. Situación real: 
+Una función procesar_pedido modifica el inventario, envía un email y actualiza estadísticas, todo sin retornar nada. Es imposible probarla sin verificar efectos colaterales en tres subsistemas distintos. 
+
+# Ejemplo de código (difícil de verificar): 
+def procesar_pedido(pedido): 
+    inventario.reducir_stock(pedido.items) 
+    email.enviar_confirmacion(pedido.cliente) 
+    estadisticas.registrar_venta(pedido.total) 
