@@ -39,6 +39,7 @@ ROL_USUARIO = "usuario"
 class Usuario: 
     """Representa un usuario del sistema.""" 
     def __init__(self, nombre: str, email: str): 
+        """Para crear el objeto Usuario"""
         self.nombre = nombre 
         self.email = email 
         self._intentos_fallidos = 0 

@@ -18,7 +18,7 @@ def calcular_cuota_prestamo(monto, tasa_anual, plazos_meses):
 
 # Solución - Con contrato explícito
 def calcular_cuota_prestamo( 
-    monto: float, 
+    monto: float,
     tasa_anual_porcentaje: float, 
     plazos_meses: int 
 ) -> float: 
