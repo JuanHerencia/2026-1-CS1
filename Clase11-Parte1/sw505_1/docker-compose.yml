@@ -1,0 +1,57 @@
+services:
+  # 1. Servidor PostgreSQL
+  sisdemo2-db:
+    container_name: sisdemo2-db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data1
+
+  # 2. Web Administrador de Base de Datos
+  sisdemo2-pgadmin_container:
+    container_name: sisdemo2-pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      - sisdemo2-db
+
+  # 3. Contenedor para Python con FastAPI
+  sisdemo2-fastapi_app:
+    container_name: sisdemo2-fastapi_app
+    image: python:3.11-slim
+    working_dir: /app2
+    # Comando temporal para mantener el contenedor vivo hasta que agregues tu código FastAPI
+    command: tail -f /dev/null 
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend2:/app2
+    depends_on:
+      - sisdemo2-db
+
+  # 4. Contenedor para Nginx (React)
+  sisdemo2-nginx:
+    container_name: sisdemo2-nginx
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      # Aquí es donde Nginx buscará el build de tu React
+      - ./frontend:/usr/share/nginx/html 
+    depends_on:
+      - sisdemo2-fastapi_app
+
+volumes:
+  pgdata:
